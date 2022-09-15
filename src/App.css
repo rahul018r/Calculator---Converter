@@ -6,4 +6,14 @@
   body {
     @apply bg-gradient-to-r from-cyan-500 to-blue-500;
   }
+  button {
+    @apply m-[1px];
+  }
+  .btn {
+    @apply text-3xl border-[1px] border-black bg-white bg-opacity-70;
+  }
+  .btn:hover,
+  .btn:focus {
+    @apply bg-opacity-90;
+  }
 }

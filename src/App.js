@@ -1,4 +1,3 @@
-import { parse } from "postcss";
 import { useReducer } from "react";
 import "./App.css";
 
@@ -85,7 +84,8 @@ const reducer = (state, { type, payload }) => {
         ...state,
         previousOperand: null,
         operation: null,
-        currentOperand: evaluate(state),
+        currentOperand: null,
+        evaluatedResult: evaluate(state),
         overWrite: true,
       };
     default:
@@ -120,22 +120,34 @@ const evaluate = ({ currentOperand, previousOperand, operation }) => {
   return computation.toString();
 };
 
-const INTIGER_FORMATTER = new Intl.NumberFormat("en-us", {
+const FORMATTER = new Intl.NumberFormat("en-us", {
   maximumFractionDigits: 0,
 });
 
 const formatOperand = (operand) => {
   if (operand == null) return;
   const [int, dec] = operand.split(".");
-  if (dec == null) return INTIGER_FORMATTER.format(int);
-  return `${INTIGER_FORMATTER.format(int)}.${dec}`;
+  if (dec == null) return FORMATTER.format(int);
+
+  return `${FORMATTER.format(int)}.${dec}`;
+};
+const formatResult = (operand) => {
+  if (operand == null) return;
+  const [int, dec] = operand.split(".");
+  if (dec == null) return FORMATTER.format(int);
+
+  FORMATTER.format(int);
+  let result = int + "0." + dec;
+  result = Number(result).toFixed(5);
+  result.toString();
+  return result;
 };
 
 function App() {
-  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
-    reducer,
-    {}
-  );
+  const [
+    { currentOperand, evaluatedResult, previousOperand, operation },
+    dispatch,
+  ] = useReducer(reducer, {});
 
   return (
     <div className="container grid justify-center mt-12">
@@ -144,7 +156,7 @@ function App() {
           {formatOperand(previousOperand)} {operation}
         </div>
         <div className="current-operand text-white text-4xl">
-          {formatOperand(currentOperand)}
+          {formatOperand(currentOperand) || formatResult(evaluatedResult)}
         </div>
       </div>
       <div

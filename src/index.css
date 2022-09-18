@@ -17,6 +17,8 @@ code {
   background-color: rgba(0, 0, 0, 0.75);
 }
 .container {
+  
+  width:270px;
   grid-template-columns: repeat(4, 6rem);
-  grid-template-rows: minmax(7rem, auto) repeat(5, 6rem);
+  grid-template-rows: minmax(5rem, auto) repeat(5, 6rem);
 }

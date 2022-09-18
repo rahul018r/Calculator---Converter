@@ -120,23 +120,23 @@ const evaluate = ({ currentOperand, previousOperand, operation }) => {
   return computation.toString();
 };
 
-const INTIGER_FORMATTER = new Intl.NumberFormat("en-us", {
+const FORMATTER = new Intl.NumberFormat("en-us", {
   maximumFractionDigits: 0,
 });
 
 const formatOperand = (operand) => {
   if (operand == null) return;
   const [int, dec] = operand.split(".");
-  if (dec == null) return INTIGER_FORMATTER.format(int);
+  if (dec == null) return FORMATTER.format(int);
 
-  return `${INTIGER_FORMATTER.format(int)}.${dec}`;
+  return `${FORMATTER.format(int)}.${dec}`;
 };
 const formatResult = (operand) => {
   if (operand == null) return;
   const [int, dec] = operand.split(".");
-  if (dec == null) return INTIGER_FORMATTER.format(int);
+  if (dec == null) return FORMATTER.format(int);
 
-  INTIGER_FORMATTER.format(int);
+  FORMATTER.format(int);
   let result = int + "0." + dec;
   result = Number(result).toFixed(5);
   result.toString();
